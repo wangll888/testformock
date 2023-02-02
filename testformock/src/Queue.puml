@@ -1,0 +1,141 @@
+@startuml
+title
+Queue
+end title
+
+scale 1.5
+
+interface Collection {
+
+}
+
+interface Queue {
+}
+
+interface BlockingQueue {
+}
+
+interface Deque {
+}
+
+interface BlockingDeque {
+}
+
+interface TransferQueue {
+}
+
+Collection <|-- Queue
+
+Queue <|-- BlockingQueue
+Queue <|-- Deque
+BlockingQueue <|-- TransferQueue
+
+Deque <|-- BlockingDeque
+BlockingQueue <|-- BlockingDeque
+
+
+abstract class AbstractCollection {
+}
+
+Collection <-- AbstractCollection
+
+abstract class AbstractQueue {
+}
+
+AbstractCollection <-- AbstractQueue
+Queue <-- AbstractQueue
+
+
+
+
+
+
+class LinkedList {
+}
+Deque <-- LinkedList
+
+
+class LinkedBlockingDeque {
+}
+AbstractQueue <-- LinkedBlockingDeque
+BlockingDeque <|-- LinkedBlockingDeque
+
+
+class LinkedTransferQueue{
+}
+AbstractQueue <-- LinkedTransferQueue
+TransferQueue <|-- LinkedTransferQueue
+
+
+
+
+
+
+
+
+
+
+class PriorityQueue {
+}
+AbstractQueue <-- PriorityQueue
+
+class ConcurrentLinkedQueue {
+}
+AbstractQueue <-- ConcurrentLinkedQueue
+
+
+
+
+
+
+
+
+
+
+
+class ArrayDeque{
+}
+AbstractCollection <-- ArrayDeque
+Deque <-- ArrayDeque
+
+class ConcurrentLinkedDeque {
+}
+AbstractCollection <-- ConcurrentLinkedDeque
+Deque <-- ConcurrentLinkedDeque
+
+
+
+
+
+
+
+
+
+
+
+class SynchronousQueue {
+}
+AbstractQueue <-- SynchronousQueue
+BlockingQueue <|-- SynchronousQueue
+
+class PriorityBlockingQueue {
+}
+AbstractQueue <-- PriorityBlockingQueue
+BlockingQueue <|-- PriorityBlockingQueue
+
+class LinkedBlockingQueue {
+}
+AbstractQueue <-- LinkedBlockingQueue
+BlockingQueue <|-- LinkedBlockingQueue
+
+class ArrayBlockingQueue {
+}
+AbstractQueue <-- ArrayBlockingQueue
+BlockingQueue <|-- ArrayBlockingQueue
+
+class DelayQueue {
+}
+AbstractQueue <-- DelayQueue
+BlockingQueue <|-- DelayQueue
+
+@enduml

@@ -1,0 +1,120 @@
+@startuml
+title
+Queue
+end title
+
+scale 1.5
+
+interface Queue {
+}
+
+interface BlockingQueue {
+}
+
+interface Deque {
+}
+
+interface BlockingDeque {
+}
+
+interface TransferQueue {
+}
+
+
+Queue <|-- BlockingQueue
+Queue <|-- Deque
+BlockingQueue <|-- TransferQueue
+
+Deque <|-- BlockingDeque
+BlockingQueue <|-- BlockingDeque
+
+
+
+
+
+
+
+
+
+
+
+
+
+class LinkedBlockingDeque {
+}
+BlockingDeque <-- LinkedBlockingDeque
+
+
+class LinkedTransferQueue{
+}
+TransferQueue <-- LinkedTransferQueue
+
+
+
+
+
+
+
+
+
+
+class PriorityQueue {
+}
+Queue <-- PriorityQueue
+
+class ConcurrentLinkedQueue {
+}
+Queue <-- ConcurrentLinkedQueue
+
+
+
+
+
+
+
+
+
+
+class LinkedList {
+}
+Deque <-- LinkedList
+
+class ArrayDeque{
+}
+Deque <-- ArrayDeque
+
+class ConcurrentLinkedDeque {
+}
+Deque <-- ConcurrentLinkedDeque
+
+
+
+
+
+
+
+
+
+
+
+class SynchronousQueue {
+}
+BlockingQueue <-- SynchronousQueue
+
+class PriorityBlockingQueue {
+}
+BlockingQueue <-- PriorityBlockingQueue
+
+class LinkedBlockingQueue {
+}
+BlockingQueue <-- LinkedBlockingQueue
+
+class ArrayBlockingQueue {
+}
+BlockingQueue <-- ArrayBlockingQueue
+
+class DelayQueue {
+}
+BlockingQueue <-- DelayQueue
+
+@enduml

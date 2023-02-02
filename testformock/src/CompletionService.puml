@@ -1,0 +1,28 @@
+@startuml
+title
+CompletionService
+end title
+
+scale 1.5
+
+interface "CompletionService" as CompletionService {
+    Future<V> submit(Callable<V> task)
+    Future<V> submit(Runnable task, V result)
+
+    Future<V> poll()
+    Future<V> poll(long timeout, TimeUnit unit)
+    Future<V> take()
+}
+
+class "ExecutorCompletionService" as ExecutorCompletionService {
+    Future<V> submit(Callable<V> task)
+    Future<V> submit(Runnable task, V result)
+
+    Future<V> poll()
+    Future<V> poll(long timeout, TimeUnit unit)
+    Future<V> take()
+}
+
+CompletionService <|-- ExecutorCompletionService
+
+@enduml

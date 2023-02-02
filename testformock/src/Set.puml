@@ -1,0 +1,50 @@
+@startuml
+title
+Set
+end title
+
+scale 1.5
+
+interface Set {
+
+}
+
+interface SortedSet {
+}
+Set <|-- SortedSet
+
+interface NavigableSet {
+}
+SortedSet <|-- NavigableSet
+
+
+
+
+
+
+class ConcurrentSkipListSet {
+}
+NavigableSet <|-- ConcurrentSkipListSet
+
+
+class CopyOnWriteArraySet {
+}
+Set <|-- CopyOnWriteArraySet
+
+class EnumSet {
+}
+Set <|-- EnumSet
+
+class HashSet {
+}
+Set <|-- HashSet
+
+class LinkedHashSet {
+}
+HashSet <|-- LinkedHashSet
+
+class TreeSet {
+}
+NavigableSet <|-- TreeSet
+
+@enduml

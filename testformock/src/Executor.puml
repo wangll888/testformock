@@ -1,0 +1,215 @@
+@startuml
+title
+Executor
+end title
+
+scale 1.5
+
+interface "Executor" as Executor {
+    void execute(Runnable command)
+}
+
+interface "ExecutorService" as ExecutorService {
+    Future<?> submit(Runnable task)
+    <T> Future<T> submit(Runnable task, T result)
+    <T> Future<T> submit(Callable<T> task)
+
+    <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
+    <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+    <T> T invokeAny(Collection<? extends Callable<T>> tasks)
+    <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+
+    void shutdown()
+    List<Runnable> shutdownNow()
+    boolean awaitTermination(long timeout, TimeUnit unit)
+    boolean isShutdown()
+    boolean isTerminated()
+}
+
+interface "ScheduledExecutorService" as ScheduledExecutorService {
+    ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit)
+    <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit)
+
+    ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit)
+    ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit)
+}
+
+class "AbstractExecutorService" as AbstractExecutorService {
+    Future<?> submit(Runnable task)
+    <T> Future<T> submit(Runnable task, T result)
+    <T> Future<T> submit(Callable<T> task)
+
+    <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
+    <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+    <T> T invokeAny(Collection<? extends Callable<T>> tasks)
+    <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
+
+    protected <T> RunnableFuture<T> newTaskFor(Callable<T> callable)
+    protected <T> RunnableFuture<T> newTaskFor(Runnable runnable, T value)
+}
+
+class "ThreadPoolExecutor" as ThreadPoolExecutor {
+    void execute(Runnable command)
+    protected void beforeExecute(Thread t, Runnable r)
+    protected void afterExecute(Runnable r, Throwable t)
+
+    void shutdown()
+    List<Runnable> shutdownNow()
+    boolean isShutdown()
+    boolean isTerminated()
+    boolean isTerminating()
+    boolean awaitTermination(long timeout, TimeUnit unit)
+    protected void terminated()
+
+    /**
+     * Task & Queue
+     */
+
+    // Get Queue
+    BlockingQueue<Runnable> getQueue()
+
+    // Remove cancelled tasks from queue
+    void purge()
+
+    // Remove special task from queue
+    boolean remove(Runnable task)
+
+    // Number of tasks that have ever been scheduled for execution
+    long getTaskCount()
+
+    // Number of tasks that have completed execution
+    long getCompletedTaskCount()
+
+    /**
+     * Rejected Execution Handler
+     */
+
+    void setRejectedExecutionHandler(RejectedExecutionHandler handler)
+    RejectedExecutionHandler getRejectedExecutionHandler()
+
+    /**
+     * Thread Factory
+     */
+
+    void setThreadFactory(ThreadFactory threadFactory)
+    ThreadFactory getThreadFactory()
+
+    /**
+     * Thread Keep-Alive Time
+     */
+
+    void setKeepAliveTime(long time, TimeUnit unit)
+    long getKeepAliveTime(TimeUnit unit)
+
+    /**
+     * Maximum Pool Size
+     */
+
+    void setMaximumPoolSize(int maximumPoolSize)
+    int getMaximumPoolSize()
+
+    /**
+     * Alive Thread
+     */
+
+    // Current Alive Pool Size
+    int getPoolSize()
+
+    // Number of threads that are actively executing tasks
+    int getActiveCount()
+
+    // Largest Current Pool Size
+    int getLargestPoolSize()
+
+    /**
+     * Core Thread
+     */
+
+    // Core Pool Size
+    void setCorePoolSize(int corePoolSize)
+    int getCorePoolSize()
+
+    // Allow Core Thread TimeOut
+    void allowCoreThreadTimeOut(boolean value)
+    boolean allowsCoreThreadTimeOut()
+
+    // Pre-start Core Thread
+    int prestartAllCoreThreads()
+    boolean prestartCoreThread()
+
+    /**
+     * Object methods
+     */
+
+    String toString()
+    protected void finalize()
+}
+
+class "ScheduledThreadPoolExecutor" as ScheduledThreadPoolExecutor {
+    /**
+     * 将以下方法改造为 0 delay 的效果。
+     */
+
+    void execute(Runnable command)
+    Future<?> submit(Runnable task)
+    <T> Future<T> submit(Runnable task, T result)
+    <T> Future<T> submit(Callable<T> task)
+
+    /**
+     * 新增以下方法，实现延时、周期执行。
+     */
+
+    <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit)
+    ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit)
+    ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit)
+    ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit)
+
+    /**
+     * 由于newTaskFor方法被本类使用了。因此提供新的钩子方法。
+     */
+    protected <V> RunnableScheduledFuture<V> decorateTask(Callable<V> callable, RunnableScheduledFuture<V> task)
+    protected <V> RunnableScheduledFuture<V> decorateTask(Runnable runnable, RunnableScheduledFuture<V> task)
+
+    /**
+     * 无变化，直接调用父类方法。
+     */
+
+    void shutdown()
+    List<Runnable> shutdownNow()
+
+    BlockingQueue<Runnable> getQueue()
+
+
+    /**
+     * 提供与延时、周期执行有关的几个策略
+     */
+
+    // Whether to continue executing existing periodic tasks even when this executor has been shutdown
+    void setContinueExistingPeriodicTasksAfterShutdownPolicy(boolean value)
+    boolean getContinueExistingPeriodicTasksAfterShutdownPolicy()
+
+    // Whether to execute existing delayed tasks even when this executor has been shutdown
+    void setExecuteExistingDelayedTasksAfterShutdownPolicy(boolean value)
+    boolean getExecuteExistingDelayedTasksAfterShutdownPolicy()
+
+    // Whether cancelled tasks should be immediately removed from the work queue at time of cancellation
+    void setRemoveOnCancelPolicy(boolean value)
+    boolean getRemoveOnCancelPolicy()
+
+}
+
+class "ForkJoinPool" as ForkJoinPool {
+
+}
+
+Executor <|-- ExecutorService
+ExecutorService <|-- ScheduledExecutorService
+
+ExecutorService <-- AbstractExecutorService
+AbstractExecutorService <-- ThreadPoolExecutor
+
+AbstractExecutorService <-- ForkJoinPool
+
+ThreadPoolExecutor <-- ScheduledThreadPoolExecutor
+ScheduledExecutorService <|-- ScheduledThreadPoolExecutor
+@enduml

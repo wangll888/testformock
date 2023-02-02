@@ -1,0 +1,97 @@
+@startuml
+title
+Future
+end title
+
+scale 1.5
+
+interface Future {
+    V get()
+    V get(long timeout, TimeUnit unit)
+
+    boolean cancel(boolean mayInterruptIfRunning)
+    boolean isCancelled()
+
+    boolean isDone()
+}
+
+interface Runnable {
+    void run()
+}
+
+interface RunnableFuture {
+    void run()
+}
+
+interface Comparable {
+    int compareTo(T o)
+}
+
+interface Delayed {
+    long getDelay(TimeUnit unit)
+}
+
+interface ScheduledFuture {
+
+}
+
+interface RunnableScheduledFuture {
+    boolean isPeriodic()
+}
+
+class FutureTask {
+    void run()
+
+    protected boolean runAndReset()
+
+    protected void set(V v)
+
+    protected void setException(Throwable t)
+
+    V get()
+    V get(long timeout, TimeUnit unit)
+
+    boolean cancel(boolean mayInterruptIfRunning)
+    boolean isCancelled()
+
+    boolean isDone()
+    protected void done()
+}
+
+abstract class ForkJoinTask {
+}
+
+class RecursiveTask {
+}
+
+class RecursiveAction {
+}
+
+class CountedCompleter {
+}
+
+
+
+
+Future <|-- RunnableFuture
+
+Runnable <|-- RunnableFuture
+
+Future <-- ForkJoinTask
+ForkJoinTask <-- RecursiveTask
+ForkJoinTask <-- RecursiveAction
+ForkJoinTask <-- CountedCompleter
+
+Comparable <|-- Delayed
+
+Delayed <|-- ScheduledFuture
+Future <|-- ScheduledFuture
+
+RunnableFuture <|-- RunnableScheduledFuture
+ScheduledFuture <|-- RunnableScheduledFuture
+
+RunnableFuture <-- FutureTask
+
+
+
+@enduml

@@ -1,0 +1,74 @@
+@startuml
+title
+Map
+end title
+
+scale 1.5
+
+interface Map {
+
+}
+
+interface SortedMap {
+}
+Map <|-- SortedMap
+
+interface NavigableMap {
+}
+SortedMap <|-- NavigableMap
+
+
+
+interface ConcurrentMap {
+}
+Map <|-- ConcurrentMap
+
+
+
+
+interface ConcurrentNavigableMap {
+}
+ConcurrentMap <|-- ConcurrentNavigableMap
+NavigableMap <|-- ConcurrentNavigableMap
+
+
+
+
+class ConcurrentHashMap {
+}
+ConcurrentMap <|-- ConcurrentHashMap
+
+
+class ConcurrentSkipListMap {
+}
+ConcurrentNavigableMap <|-- ConcurrentSkipListMap
+
+class EnumMap {
+}
+Map <|-- EnumMap
+
+class HashMap {
+}
+Map <|-- HashMap
+
+class Hashtable {
+}
+Map <|-- Hashtable
+
+class IdentityHashMap {
+}
+Map <|-- IdentityHashMap
+
+class LinkedHashMap {
+}
+HashMap <|-- LinkedHashMap
+
+class TreeMap {
+}
+NavigableMap <|-- TreeMap
+
+class WeakHashMap {
+}
+Map <|-- WeakHashMap
+
+@enduml

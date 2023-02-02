@@ -1,0 +1,36 @@
+@startuml
+title
+List
+end title
+
+scale 1.5
+
+interface List {
+}
+
+
+
+
+class ArrayList {
+}
+List <|-- ArrayList
+
+class CopyOnWriteArrayList {
+}
+List <|-- CopyOnWriteArrayList
+
+class LinkedList {
+}
+List <|-- LinkedList
+
+class Vector {
+}
+List <|-- Vector
+
+class Stack {
+}
+Vector <|-- Stack
+
+
+
+@enduml
